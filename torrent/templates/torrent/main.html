@@ -1,0 +1,33 @@
+{% extends 'torrent/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for torrent in torrents %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src={{ torrent.image.url }} height="250"/>
+            <div class="card-body">
+              <div style="height:50px">
+              <p style="font-family:verdana;font-size:25px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  {{ torrent.name }}
+              </p>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <form action="{% url 'download' torrent.id %}">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Скачать</button>
+                  </form>
+                </div>
+                <h5>{{ torrent.score }}/10</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}
