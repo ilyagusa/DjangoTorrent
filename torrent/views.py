@@ -6,20 +6,28 @@ import os
 
 
 def main(request):
+    """Main page"""
     torrents = Torrent.objects.all()
 
-    return render(request, 'torrent/main.html', {'title': 'Главная страница сайта', 'torrents': torrents})
+    return render(
+        request,
+        'torrent/main.html',
+        {
+            'title': 'Главная страница сайта',
+            'torrents': torrents
+        }
+    )
 
 
 def download(request, torrent_id: int):
     """Download torrent file"""
-    torrent_record = Torrent.objects.get(id=torrent_id)
+    torrent_obj = Torrent.objects.get(id=torrent_id)
 
-    if not torrent_record:
+    if not torrent_obj:
         raise Http404("Торрент не найден")
 
     # get the download path
-    download_path = torrent_record.file.path
+    download_path = torrent_obj.file.path
 
     if os.path.exists(download_path):
         with open(download_path, 'rb') as f:
@@ -28,6 +36,19 @@ def download(request, torrent_id: int):
             return response
 
     raise Http404("Торрент не найден")
+
+
+def torrent(request, torrent_id):
+    torrent_obj = Torrent.objects.get(id=torrent_id)
+
+    return render(
+        request,
+        'torrent/torrent.html',
+        {
+            'title': 'Страница определенного торрента',
+            'torrent': torrent_obj
+        }
+    )
 
 
 def about(request):

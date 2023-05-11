@@ -9,7 +9,7 @@
     {% for torrent in torrents %}
         <div class="col">
           <div class="card shadow-sm">
-            <img src={{ torrent.image.url }} height="250"/>
+            <a href="{% url 'torrent' torrent.id %}"><img src={{ torrent.image.url }} height="250" width="419.33"></a>
             <div class="card-body">
               <div style="height:50px">
               <p style="font-family:verdana;font-size:25px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
