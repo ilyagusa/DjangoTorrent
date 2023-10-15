@@ -10,9 +10,9 @@ class Torrent(models.Model):
     score = models.FloatField("Score")
     genres = models.TextField("Genres")
     description = models.TextField("Description")
+    info = models.JSONField("Info")
 
     image = models.ImageField("Image")
-    file = models.FileField("File")
 
     def __str__(self):
         return self.name
@@ -20,3 +20,11 @@ class Torrent(models.Model):
     class Meta:
         verbose_name = 'Торрент'
         verbose_name_plural = 'Торренты'
+
+
+class TorrentFile(models.Model):
+    file = models.FileField("File")
+    size = models.CharField("Size", max_length=20)
+    file_format = models.CharField("Format", max_length=20)
+
+    torrent = models.ForeignKey(Torrent, on_delete=models.CASCADE)
